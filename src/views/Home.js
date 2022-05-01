@@ -1,13 +1,11 @@
 import PostList from '../componets/PostList';
 import {List} from '@mui/material';
-import CreateFabButton from '../componets/CreateFabButton';
+import FormDialog from '../componets/FormDialog';
 
 const Home = () => {
-  const createPost = () => {
-    console.log('PRESSED');
-  };
   return (
       <div>
+        <FormDialog/>
         <List sx={{
           marginTop: '10px',
           display: 'inline-block',
@@ -16,7 +14,6 @@ const Home = () => {
         }}>
           <PostList/>
         </List>
-        <CreateFabButton func={createPost}/>
       </div>
   );
 };

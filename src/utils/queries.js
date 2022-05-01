@@ -25,3 +25,35 @@ query Posts {
   }
 }
 `;
+
+export const getSportTypes = gql`
+query SportTypes {
+  sportTypes {
+    id
+    title
+  }
+}
+`;
+
+export const addPost = gql`
+mutation AddPost($postInfo: PostInfo) {
+  addPost(postInfo: $postInfo) {
+    id
+    title
+    description
+    sport {
+      title
+    }
+  }
+}
+`;
+
+export const registerUser = gql`
+mutation RegisterUser($username: String!, $fullName: String, $password: String!) {
+  registerUser(username: $username, full_name: $fullName, password: $password) {
+    id
+    username
+    token
+  }
+}
+`;

@@ -1,16 +1,18 @@
-import {useContext, useState} from 'react';
+import {useContext} from 'react';
 import {MainContext} from '../context/MainContext';
 import LoginForm from '../componets/LoginForm';
+import RegisterForm from '../componets/RegisterForm';
 
 const Login = () => {
-  const {setIsLoggedIn, setUser} = useContext(MainContext);
-  const [formToggle, setFormToggle] = useState(true);
-
-  const formToggleAction = () => setFormToggle(!formToggle);
+  const {setIsLoggedIn, setUser, formToggle} = useContext(MainContext);
 
   return (
       <div>
-        <LoginForm formToggle={formToggleAction}/>
+        {formToggle ? (
+            <LoginForm/>
+        ) : (
+            <RegisterForm/>
+        )}
       </div>
   );
 };
