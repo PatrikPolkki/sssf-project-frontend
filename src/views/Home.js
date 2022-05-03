@@ -1,8 +1,17 @@
 import PostList from '../componets/PostList';
 import {List} from '@mui/material';
 import FormDialog from '../componets/FormDialog';
+import {useQuery} from '@apollo/client';
+import {getPostsQuery} from '../utils/queries';
+import {useEffect, useState} from 'react';
 
 const Home = () => {
+  const {data} = useQuery(getPostsQuery);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    if (data) setPosts(data.posts);
+  }, [data]);
   return (
       <div>
         <FormDialog/>
@@ -12,7 +21,7 @@ const Home = () => {
           maxWidth: 360,
           bgcolor: 'background.paper',
         }}>
-          <PostList/>
+          <PostList postList={posts}/>
         </List>
       </div>
   );

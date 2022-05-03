@@ -57,3 +57,45 @@ mutation RegisterUser($username: String!, $fullName: String, $password: String!)
   }
 }
 `;
+
+export const getPostsByUser = gql`
+query PostByUser($postByUserId: ID) {
+  postByUser(id: $postByUserId) {
+    id
+    owner {
+      username
+    }
+    title
+    description
+    location
+    date
+    sport {
+      title
+    }
+    participants {
+      username
+    }
+  }
+}
+`;
+
+export const getAppliedPosts = gql`
+query AppliedPosts($appliedPostsId: ID) {
+  appliedPosts(id: $appliedPostsId) {
+    id
+    owner {
+      username
+    }
+    title
+    description
+    location
+    date
+    sport {
+      title
+    }
+    participants {
+      username
+    }
+  }
+}
+`;

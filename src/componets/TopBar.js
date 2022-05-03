@@ -18,6 +18,8 @@ const TopBar = () => {
     setFormToggle,
     formToggle,
     openDialog,
+    profile,
+    openProfile,
   } = useContext(
       MainContext);
 
@@ -26,6 +28,14 @@ const TopBar = () => {
   };
   const enableRegisterForm = () => {
     setFormToggle(false);
+  };
+
+  const enableProfile = () => {
+    openProfile(true);
+  };
+
+  const enableHome = () => {
+    openProfile(false);
   };
 
   const handleDialogOpen = () => {
@@ -59,7 +69,17 @@ const TopBar = () => {
                   <Button color="inherit"
                           onClick={handleDialogOpen}>Create</Button>
                   <Button color="inherit" onClick={logOut}>Log Out</Button>
-                  <Button color="inherit">Profile</Button>
+
+                  <Button color="inherit"
+                          onClick={enableHome}
+                          sx={profile
+                              ? {display: 'inline-flex'}
+                              : {display: 'none'}}>Home</Button>
+                  <Button color="inherit"
+                          onClick={enableProfile}
+                          sx={profile
+                              ? {display: 'none'}
+                              : {display: 'inline-flex'}}>Profile</Button>
                 </>
             ) : (
                 <>

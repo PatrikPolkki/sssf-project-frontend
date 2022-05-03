@@ -4,14 +4,15 @@ import {MainContext} from './context/MainContext';
 import Home from './views/Home';
 import Login from './views/Login';
 import TopBar from './componets/TopBar';
+import Profile from './views/Profile';
 
 const App = () => {
-  const {isLoggedIn} = useContext(MainContext);
+  const {isLoggedIn, profile} = useContext(MainContext);
   return (
       <div className="App">
         <TopBar/>
         {isLoggedIn ? (
-            <Home/>
+            profile ? <Profile/> : <Home/>
         ) : (
             <Login/>
         )}
