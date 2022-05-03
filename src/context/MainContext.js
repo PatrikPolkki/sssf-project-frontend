@@ -7,6 +7,7 @@ const MainProvider = ({children}) => {
   const [user, setUser] = useState({});
   const [formToggle, setFormToggle] = useState(true);
   const [dialog, openDialog] = useState(false);
+  const [itemDialog, openItemDialog] = useState(false);
   const [profile, openProfile] = useState(false);
 
   useEffect(() => {
@@ -33,6 +34,8 @@ const MainProvider = ({children}) => {
             openDialog,
             profile,
             openProfile,
+            itemDialog,
+            openItemDialog,
           }}
       >
         {children}
