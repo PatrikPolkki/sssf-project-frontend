@@ -1,35 +1,70 @@
 import {
-  Avatar,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
+  Box,
+  Card,
+  CardActionArea,
+  CardContent,
+  Divider,
   Typography,
 } from '@mui/material';
+import {MainContext} from '../context/MainContext';
+import {useContext} from 'react';
+import moment from 'moment';
 
 const PostListItem = ({post}) => {
-  console.log(post);
+  const {
+    openItemDialog,
+    setItemId,
+  } = useContext(MainContext);
+
+  const test = () => {
+    console.log('POST', post);
+    openItemDialog(true);
+    setItemId(post.id);
+  };
+
+  // moment(post.date).format('MMMM d, YYYY')
   return (
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt={post.owner.username} src=""/>
-        </ListItemAvatar>
-        <ListItemText primary={
-          <>
-            {post.title}
-            <Typography
-                sx={{
-                  display: 'inline',
-                  paddingLeft: '20px',
-                }}
-                component="span"
-                variant="body2"
-            >
-              {post.owner.username}
+      <Card sx={{
+        minWidth: 360,
+        margin: '10px',
+        textAlign: 'start',
+        backgroundColor: '#f8f8f8',
+      }}>
+        <CardActionArea onClick={test}>
+          <CardContent>
+            <Typography variant="h4"
+                        textAlign="center">{post.sport.title}</Typography>
+            <Divider sx={{margin: '8px 0'}}/>
+            <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+              <Box>
+                <Typography>
+                  {`On ${moment(post.date).format('MMMM d, YYYY')}`}
+                </Typography>
+                <Typography>
+                  {`At ${post.location}`}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography color="text.secondary" variant="body2">
+                  {`Posted by`}
+                </Typography>
+                <Typography>
+                  {`${post.owner.username}`}
+                </Typography>
+              </Box>
+            </Box>
+            <Divider sx={{margin: '8px 0'}}/>
+            <Typography variant="h5">
+              {post.title}
             </Typography>
-          </>
-        } secondary={post.description}/>
-      </ListItem>
+            <Typography variant="body2">
+              {post.description}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
   );
 };
 
 export default PostListItem;
+

@@ -22,6 +22,32 @@ query Posts {
     sport {
       title
     }
+    date
+    location
+  }
+}
+`;
+
+export const getPostQuery = gql`
+query Post($postId: ID!) {
+  post(id: $postId) {
+    id
+    owner {
+      id
+      username
+    }
+    title
+    description
+    location
+    date
+    sport {
+      id
+      title
+    }
+    participants {
+      id
+      username
+    }
   }
 }
 `;
@@ -79,6 +105,41 @@ query PostByUser($postByUserId: ID) {
 }
 `;
 
+export const createSportType = gql`
+mutation AddSportType($title: String) {
+  addSportType(title: $title) {
+    id
+    title
+  }
+}
+`;
+
+export const getUserInfo = gql`
+query User($userId: ID!) {
+  user(id: $userId) {
+    applied_sports {
+      id
+      owner {
+        username
+        id
+      }
+      title
+      description
+      location
+      date
+      sport {
+        id
+        title
+      }
+      participants {
+        id
+        username
+      }
+    }
+  }
+}
+`;
+
 export const getAppliedPosts = gql`
 query AppliedPosts($appliedPostsId: ID) {
   appliedPosts(id: $appliedPostsId) {
@@ -94,6 +155,54 @@ query AppliedPosts($appliedPostsId: ID) {
       title
     }
     participants {
+      username
+    }
+  }
+}
+`;
+
+export const applyToPost = gql`
+mutation ApplyToPost($applyToPostId: ID!, $participantId: ID!) {
+  applyToPost(id: $applyToPostId, participantId: $participantId) {
+    id
+    owner {
+      id
+      username
+    }
+    title
+    description
+    location
+    date
+    sport {
+      id
+      title
+    }
+    participants {
+      id
+      username
+    }
+  }
+}
+`;
+
+export const leaveFromPost = gql`
+mutation LeaveFromPost($leaveFromPostId: ID!, $participantId: ID!) {
+  leaveFromPost(id: $leaveFromPostId, participantId: $participantId) {
+    id
+    owner {
+      id
+      username
+    }
+    title
+    description
+    location
+    date
+    sport {
+      id
+      title
+    }
+    participants {
+      id
       username
     }
   }
