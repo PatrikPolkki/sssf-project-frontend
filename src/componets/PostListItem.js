@@ -1,38 +1,68 @@
-import {Card, CardActionArea, CardContent, Typography} from '@mui/material';
+import {
+  Box,
+  Card,
+  CardActionArea,
+  CardContent,
+  Divider,
+  Typography,
+} from '@mui/material';
 import {MainContext} from '../context/MainContext';
 import {useContext} from 'react';
-import ItemDialog from './ItemDialog';
+import moment from 'moment';
 
 const PostListItem = ({post}) => {
-  const {user, itemDialog, openItemDialog} = useContext(MainContext);
+  const {
+    openItemDialog,
+    setItemId,
+  } = useContext(MainContext);
 
   const test = () => {
     console.log('POST', post);
     openItemDialog(true);
+    setItemId(post.id);
   };
+
+  // moment(post.date).format('MMMM d, YYYY')
   return (
-      <>
-        <ItemDialog postItem={post}/>
-        <Card sx={{minWidth: 360, margin: 10}}>
-          <CardActionArea onClick={test}>
-            <CardContent>
-              <Typography sx={{fontSize: 14}} color="text.secondary"
-                          gutterBottom>
-                Word of the Day
-              </Typography>
-              <Typography variant="h5" component="div">
-                {post.title}
-              </Typography>
-              <Typography sx={{mb: 1.5}} color="text.secondary">
-                adjective
-              </Typography>
-              <Typography variant="body2">
-                {post.description}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-      </>
+      <Card sx={{
+        minWidth: 360,
+        margin: '10px',
+        textAlign: 'start',
+        backgroundColor: '#f8f8f8',
+      }}>
+        <CardActionArea onClick={test}>
+          <CardContent>
+            <Typography variant="h4"
+                        textAlign="center">{post.sport.title}</Typography>
+            <Divider sx={{margin: '8px 0'}}/>
+            <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+              <Box>
+                <Typography>
+                  {`On ${moment(post.date).format('MMMM d, YYYY')}`}
+                </Typography>
+                <Typography>
+                  {`At ${post.location}`}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography color="text.secondary" variant="body2">
+                  {`Posted by`}
+                </Typography>
+                <Typography>
+                  {`${post.owner.username}`}
+                </Typography>
+              </Box>
+            </Box>
+            <Divider sx={{margin: '8px 0'}}/>
+            <Typography variant="h5">
+              {post.title}
+            </Typography>
+            <Typography variant="body2">
+              {post.description}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
   );
 };
 

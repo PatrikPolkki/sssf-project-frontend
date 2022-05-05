@@ -11,11 +11,12 @@ import {useContext, useState} from 'react';
 import AutoCompleteSports from './AutoCompleteSports';
 import moment from 'moment';
 import {useMutation} from '@apollo/client';
-import {addPost} from '../utils/queries';
+import {addPost, createSportType} from '../utils/queries';
 import {MainContext} from '../context/MainContext';
 
 const FormDialog = () => {
-  const [sportType, setSportType] = useState({});
+  const [sportType, setSportType] = useState(null);
+  const [newSportType, setNewSportType] = useState('');
   const {user, dialog, openDialog} = useContext(MainContext);
 
   const handleClose = () => {
@@ -23,7 +24,16 @@ const FormDialog = () => {
   };
 
   const [createPost] = useMutation(addPost);
+  const [createSport] = useMutation(createSportType);
 
+  const createNewSportType = async (title) => {
+    try {
+      const sport = await createSport({variables: {title: title}});
+      return sport.id;
+    } catch (e) {
+      console.log('createSport', e.graphQLErrors);
+    }
+  };
   const doCreatePost = async (e) => {
     e.preventDefault();
     const elements = e.target.elements;
@@ -31,7 +41,9 @@ const FormDialog = () => {
     const desc = elements.desc.value;
     const location = elements.location.value;
     const date = elements.date.value;
-    const sport = sportType.id;
+
+    const sport = sportType !== null ? sportType.id : await createSport(
+        {variables: {title: newSportType}});
 
     const postInfo = {
       owner: user.userId,
@@ -39,7 +51,7 @@ const FormDialog = () => {
       description: desc,
       location: location,
       date: date,
-      sport: sport,
+      sport: sport.data.addSportType.id,
       participants: user.userId,
     };
     if (title !== '' && desc !== '' && location !== '' && sportType !==
@@ -98,7 +110,10 @@ const FormDialog = () => {
                   }}
               />
               <AutoCompleteSports margin="dense"
-                                  callback={(data) => {setSportType(data);}}/>
+                                  callback={(data) => {setSportType(data);}}
+                                  inputCallBack={(data) => {
+                                    setNewSportType(data);
+                                  }}/>
 
             </DialogContent>
             <DialogActions>

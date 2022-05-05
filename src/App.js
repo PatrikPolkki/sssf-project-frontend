@@ -5,12 +5,17 @@ import Home from './views/Home';
 import Login from './views/Login';
 import TopBar from './componets/TopBar';
 import Profile from './views/Profile';
+import FormDialog from './componets/FormDialog';
+import ItemDialog from './componets/ItemDialog';
 
 const App = () => {
-  const {isLoggedIn, profile} = useContext(MainContext);
+  const {isLoggedIn, profile, itemDialog} = useContext(MainContext);
   return (
       <div className="App">
         <TopBar/>
+        <FormDialog/>
+        {itemDialog ? (<ItemDialog/>) : (<></>)
+        }
         {isLoggedIn ? (
             profile ? <Profile/> : <Home/>
         ) : (

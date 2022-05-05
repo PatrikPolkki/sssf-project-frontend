@@ -9,6 +9,7 @@ const MainProvider = ({children}) => {
   const [dialog, openDialog] = useState(false);
   const [itemDialog, openItemDialog] = useState(false);
   const [profile, openProfile] = useState(false);
+  const [itemId, setItemId] = useState('');
 
   useEffect(() => {
     const username = localStorage.getItem('username');
@@ -36,6 +37,8 @@ const MainProvider = ({children}) => {
             openProfile,
             itemDialog,
             openItemDialog,
+            itemId,
+            setItemId,
           }}
       >
         {children}
