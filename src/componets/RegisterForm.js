@@ -2,7 +2,7 @@ import {useMutation} from '@apollo/client';
 import {registerUser} from '../utils/queries';
 import {useContext} from 'react';
 import {MainContext} from '../context/MainContext';
-import {Button, TextField} from '@mui/material';
+import {Button, TextField, Typography} from '@mui/material';
 
 const RegisterForm = () => {
   const {setUser, setIsLoggedIn} = useContext(MainContext);
@@ -26,6 +26,8 @@ const RegisterForm = () => {
 
   return (
       <div className="form" style={{display: 'inline-block'}}>
+        <Typography variant="h4"
+                    sx={{margin: '30px 0 10px 0 '}}>Register</Typography>
         <form onSubmit={registerAction}>
           <TextField
               margin="dense"

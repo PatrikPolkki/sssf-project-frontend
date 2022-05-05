@@ -15,8 +15,10 @@ import {applyToPost, getPostQuery, leaveFromPost} from '../utils/queries';
 import moment from 'moment';
 
 const ItemDialog = () => {
-  const {user, itemDialog, openItemDialog, itemId} = useContext(MainContext);
+  const {user, itemDialog, openItemDialog, itemId, socket} = useContext(
+      MainContext);
   const [postItem, setPostItem] = useState({});
+  const [participantsCount, setParticipantsCount] = useState(0);
 
   const {data} = useQuery(getPostQuery, {variables: {postId: itemId}});
   const [applyAction] = useMutation(applyToPost);
@@ -28,14 +30,23 @@ const ItemDialog = () => {
 
   useEffect(() => {
     console.log('data', data);
-    if (data) setPostItem(data.post);
+    if (data) {
+      setPostItem(data.post);
+      setParticipantsCount(data.post.participants.length);
+    }
   }, [data]);
 
-  /*
   useEffect(() => {
-    if (dataA) setPostItem(dataA);
-  }, [dataA]);
-*/
+    const socketListener = (args) => {
+      console.log('args', args);
+      setParticipantsCount(args);
+    };
+    console.log('ID', postItem.id);
+    socket.on(postItem.id, socketListener);
+    return () => {
+      socket.off(postItem.id, socketListener);
+    };
+  }, [postItem.id, socket]);
 
   const applyPost = async () => {
     const postID = postItem.id;
@@ -113,10 +124,8 @@ const ItemDialog = () => {
               justifyContent: 'space-between',
               margin: '10px',
             }}>
-              <Typography variant={'body1'}>Number of applicants</Typography>
-              <Typography variant={'body1'}>{postItem.participants
-                  ? postItem.participants.length
-                  : 'not found'}</Typography>
+              <Typography variant={'body1'}>Participants</Typography>
+              <Typography variant={'body1'}>{participantsCount}</Typography>
             </div>
             <Divider/>
             <div style={{

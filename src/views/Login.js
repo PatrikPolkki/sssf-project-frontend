@@ -4,7 +4,7 @@ import LoginForm from '../componets/LoginForm';
 import RegisterForm from '../componets/RegisterForm';
 
 const Login = () => {
-  const {setIsLoggedIn, setUser, formToggle} = useContext(MainContext);
+  const {formToggle} = useContext(MainContext);
 
   return (
       <div>
