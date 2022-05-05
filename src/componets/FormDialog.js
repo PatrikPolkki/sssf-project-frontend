@@ -51,7 +51,7 @@ const FormDialog = () => {
       description: desc,
       location: location,
       date: date,
-      sport: sport.data.addSportType.id,
+      sport: sport.data ? sport.data.addSportType.id : sport,
       participants: user.userId,
     };
     if (title !== '' && desc !== '' && location !== '' && sportType !==
@@ -69,14 +69,14 @@ const FormDialog = () => {
   return (
       <div>
         <Dialog open={dialog} onClose={handleClose}>
-          <DialogTitle>Create new sport post</DialogTitle>
+          <DialogTitle>Create new sport announcement</DialogTitle>
           <form onSubmit={doCreatePost}>
             <DialogContent>
-              <DialogContentText>Fulfill the given options</DialogContentText>
+              <DialogContentText>Fulfill the given inputs</DialogContentText>
               <TextField
                   margin="dense"
                   id="title"
-                  label="Title for your sport post"
+                  label="Title for your sport announcement"
                   type="text"
                   fullWidth
                   variant="outlined"
@@ -84,7 +84,7 @@ const FormDialog = () => {
               <TextField
                   margin="dense"
                   id="desc"
-                  label="Short description for your sport post"
+                  label="Short description for your sport announcement"
                   type="text"
                   fullWidth
                   multiline
@@ -93,7 +93,7 @@ const FormDialog = () => {
               <TextField
                   margin="dense"
                   id="location"
-                  label="Location for your post"
+                  label="location where this sport event takes place"
                   type="text"
                   fullWidth
                   variant="outlined"
@@ -101,7 +101,7 @@ const FormDialog = () => {
               <TextField
                   margin="dense"
                   id="date"
-                  label="Date for post"
+                  label="Date for sport event"
                   type="datetime-local"
                   defaultValue={moment(new Date()).format('YYYY-MM-DDTHH:mm')}
                   fullWidth

@@ -10,6 +10,7 @@ const MainProvider = ({children}) => {
   const [itemDialog, openItemDialog] = useState(false);
   const [profile, openProfile] = useState(false);
   const [itemId, setItemId] = useState('');
+  const [socket, setSocket] = useState(undefined);
 
   useEffect(() => {
     const username = localStorage.getItem('username');
@@ -39,6 +40,8 @@ const MainProvider = ({children}) => {
             openItemDialog,
             itemId,
             setItemId,
+            socket,
+            setSocket,
           }}
       >
         {children}

@@ -2,7 +2,7 @@ import {useLazyQuery} from '@apollo/client';
 import {login} from '../utils/queries';
 import {useContext} from 'react';
 import {MainContext} from '../context/MainContext';
-import {Button, TextField} from '@mui/material';
+import {Button, TextField, Typography} from '@mui/material';
 
 const LoginForm = () => {
   const {setUser, setIsLoggedIn} = useContext(MainContext);
@@ -29,6 +29,8 @@ const LoginForm = () => {
 
   return (
       <div className="form" style={{display: 'inline-block'}}>
+        <Typography variant="h4" sx={{margin: '30px 0 10px 0 '}}>Log
+          in</Typography>
         <form onSubmit={loginAction}>
           <TextField
               margin="dense"
